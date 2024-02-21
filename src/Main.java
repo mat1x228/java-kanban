@@ -1,16 +1,30 @@
+
+import managerLogic.TaskManager;
+import tasks.Progress;
+import tasks.Epic;
+import tasks.SubTask;
+import tasks.Task;
+
 public class Main {
 
     public static void main(String[] args) {
         TaskManager taskManager = new TaskManager();
-        Epic epic2 = new Epic("Epic2", "Epic1 discr2");
+        Task task1 = new Task("Task1", "Task1 discr", Progress.NEW);
+        Task task2 = new Task("Task2", "Task1 discr", Progress.DONE);
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        Epic epic1 = new Epic("Task2", "Task1 discr");
+        taskManager.addEpic(epic1);
+        SubTask subTask1 = new SubTask("Task2", "Task1 discr", Progress.DONE, epic1.getId());
+        SubTask subTask2 = new SubTask("Task2", "Task1 discr", Progress.DONE, epic1.getId());
+        SubTask subTask3 = new SubTask("Task2", "Task1 discr", Progress.IN_PROGRESS, epic1.getId());
+        taskManager.addSubtask(subTask1);
+        taskManager.addSubtask(subTask2);
+        taskManager.addSubtask(subTask3);
+        taskManager.updateEpicStatus(epic1);
+        Epic epic2 = new Epic("Epic2", "Task1 discr");
         taskManager.addEpic(epic2);
-        SubTask subtask1 = new SubTask("sub1", "discr1", epic2.getId());
-        SubTask subtask2 = new SubTask("sub2", "discr2",epic2.getId());
-        taskManager.addSubtask(epic2.getId(), subtask1);
-        taskManager.addSubtask(epic2.getId(), subtask2);
-        subtask1.updateTaskStatus(subtask1.getTaskId(), Progress.DONE);
-        subtask2.updateTaskStatus(subtask2.getTaskId(), Progress.DONE);
-        //без понятия как решить проблему со сменой статусов у Эпиков, просидел 6 часов так и не нашел решение
-        System.out.println(taskManager.taskStorage);
+        SubTask subTask4 = new SubTask("Task4", "Task1 discr", Progress.IN_PROGRESS, epic2.getId());
+        System.out.println(taskManager.getEpicById(epic2.getId()));
     }
 }

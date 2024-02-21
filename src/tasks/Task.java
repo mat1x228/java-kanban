@@ -1,36 +1,28 @@
-import java.util.Objects;
+package tasks;
 
 public class Task {
-   private int id;
-   private String name;
-   private String discr;
-   private Progress status;
-   private Types type;
+    private int id;
+    private String name;
+    private String discr;
+    private Progress status;
 
-   public void setType(Types type) {
-       this.type = type;
-   }
-
-    public Types getType () {
-        return type;
-    }
-
-    Task(String name, String discr) {
+    public Task(String name, String discr, Progress status) {
         this.name = name;
         this.discr = discr;
+        this.status = status;
     }
+
     public void setId(int id) {
         this.id = id;
     }
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "tasks.Task{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", discr='" + discr + '\'' +
-                ", status=" + status +
-                ", type=" + type +
+                ", status=" + getStatus() +
                 '}';
     }
 
@@ -38,7 +30,7 @@ public class Task {
         this.status = status;
     }
 
-    public int getTaskId(){
+    public int getTaskId() {
         return id;
     }
 
@@ -57,9 +49,5 @@ public class Task {
     public String getName() {
         return name;
     }
-    public void updateTaskStatus(int taskId, Progress newStatus) {
-        if (this.getId() == taskId) {
-            this.setStatus(newStatus);
-        }
-    }
+
 }
