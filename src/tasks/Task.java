@@ -30,10 +30,6 @@ public class Task {
         this.status = status;
     }
 
-    public int getTaskId() {
-        return id;
-    }
-
     public int getId() {
         return id;
     }

@@ -15,17 +15,16 @@ public class Main {
         taskManager.addTask(task2);
         Epic epic1 = new Epic("Task2", "Task1 discr");
         taskManager.addEpic(epic1);
-        SubTask subTask1 = new SubTask("Task2", "Task1 discr", Progress.DONE, epic1.getId());
-        SubTask subTask2 = new SubTask("Task2", "Task1 discr", Progress.DONE, epic1.getId());
-        SubTask subTask3 = new SubTask("Task2", "Task1 discr", Progress.IN_PROGRESS, epic1.getId());
+        SubTask subTask1 = new SubTask("Task2", "Task1 discr", Progress.NEW, epic1.getId());
+        SubTask subTask2 = new SubTask("Task2", "Task1 discr", Progress.NEW, epic1.getId());
+        SubTask subTask3 = new SubTask("Task2", "Task1 discr", Progress.DONE, epic1.getId());
         taskManager.addSubtask(subTask1);
         taskManager.addSubtask(subTask2);
         taskManager.addSubtask(subTask3);
-        taskManager.updateEpicStatus(epic1);
         Epic epic2 = new Epic("Epic2", "Task1 discr");
         taskManager.addEpic(epic2);
         SubTask subTask4 = new SubTask("Task4", "Task1 discr", Progress.IN_PROGRESS, epic2.getId());
-        System.out.println(taskManager.getEpicById(epic2.getId()));
+        System.out.println(taskManager.getEpicsSubtasks(epic1.getId()));
     }
 }
 
