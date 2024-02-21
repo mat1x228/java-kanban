@@ -24,7 +24,8 @@ public class Main {
         Epic epic2 = new Epic("Epic2", "Task1 discr");
         taskManager.addEpic(epic2);
         SubTask subTask4 = new SubTask("Task4", "Task1 discr", Progress.IN_PROGRESS, epic2.getId());
-        System.out.println(taskManager.getEpicsSubtasks(epic1.getId()));
+        taskManager.clearSubtasks();
+        System.out.println(epic1.getSubTasks());
     }
 }
 

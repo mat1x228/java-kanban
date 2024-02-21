@@ -100,13 +100,21 @@ public class TaskManager {
         subtaskStorage.remove(id);
     }
 
+    /*похоже придется отрефакторить способ хранения сабтаск в рамках следующих ТЗ, ибо это доставляет слишком много лишних хлопот, оставлю пока в таком виде,
+    на данный момент цель допердеть до ТЗ-5 учитывая минимальные временные ресурсы)
+    * */
     public void clearSubtasks() {
-        subtaskStorage.clear();
-        for (Epic epic : epicStorage.values()){
-            if(epic.getSubTasks() == null || epic.getSubTasks().isEmpty()) {
+
+        ArrayList<SubTask> allSubTasks = new ArrayList<>(subtaskStorage.values());
+        for (SubTask subTask : allSubTasks) {
+            Integer epicId = subTask.getEpicId();
+            Epic epic = epicStorage.get(epicId);
+            if (epic != null) {
+                epic.getSubTasks().clear();
                 epic.setStatus(Progress.NEW);
             }
         }
+        subtaskStorage.clear();
     }
 
     public void clearTasks() {
