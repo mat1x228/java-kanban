@@ -1,10 +1,10 @@
 package interfaces;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import tasks.Task;
 
 public interface HistoryManager {
     void add(Task task);
-    ArrayList<Task> getHistory();
+    List<Task> getHistory();
 }

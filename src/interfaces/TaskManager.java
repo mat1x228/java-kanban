@@ -5,21 +5,22 @@ import tasks.SubTask;
 import tasks.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
+
+    List<Task> getHistory();
     void addTask(Task task);
 
     void addEpic(Epic epic);
 
     void addSubtask(SubTask subtask);
 
-    int generateNextId();
+    List<Epic> getEpicStorage();
 
-    ArrayList<Epic> getEpicStorage();
+    List<SubTask> getSubTaskStorage();
 
-    ArrayList<SubTask> getSubTaskStorage();
-
-    ArrayList<Task> getTaskStorage();
+    List<Task> getTaskStorage();
 
     SubTask getSubtaskById(int id);
 
@@ -45,7 +46,5 @@ public interface TaskManager {
 
     void updateEpic(Epic epic);
 
-    void updateEpicStatus(Epic epic);
-
-    ArrayList<SubTask> getEpicsSubtasks(int epicId);
+    List<SubTask> getEpicsSubtasks(int epicId);
 }
