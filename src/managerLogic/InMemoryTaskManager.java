@@ -1,5 +1,7 @@
 package managerLogic;
 
+import interfaces.HistoryManager;
+import interfaces.TaskManager;
 import tasks.Epic;
 import tasks.Progress;
 import tasks.SubTask;
@@ -8,30 +10,33 @@ import tasks.Task;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-public class TaskManager {
+public class  InMemoryTaskManager implements TaskManager {
     private int counterId;
     private HashMap<Integer, Task> taskStorage;
     private HashMap<Integer, Epic> epicStorage;
     private HashMap<Integer, SubTask> subtaskStorage;
+    private HistoryManager historyManager;
 
-    public TaskManager() {
-        taskStorage = new HashMap<>();
-        epicStorage = new HashMap<>();
-        subtaskStorage = new HashMap<>();
-        counterId = 1;
+    public InMemoryTaskManager(HistoryManager historyManager) {
+        this.taskStorage = new HashMap<>();
+        this.epicStorage = new HashMap<>();
+        this.subtaskStorage = new HashMap<>();
+        this.counterId = 1;
+        this.historyManager = historyManager;
     }
-
-    public void addTask(Task task) {
+    @Override
+    public  void addTask(Task task) {
         task.setId(generateNextId());
         taskStorage.put(task.getId(), task);
     }
-
-    public void addEpic(Epic epic) {
+    @Override
+    public  void addEpic(Epic epic) {
         epic.setId(generateNextId());
         epicStorage.put(epic.getId(), epic);
     }
 
-    public void addSubtask(SubTask subtask) {
+    @Override
+    public  void addSubtask(SubTask subtask) {
         int epicId = subtask.getEpicId();
         Epic epic = epicStorage.get(epicId);
         if (epic == null) {
@@ -44,41 +49,66 @@ public class TaskManager {
         updateEpicStatus(epic);
     }
 
+    @Override
     public int generateNextId() {
         return counterId++;
     }
 
+    @Override
     public ArrayList<Epic> getEpicStorage() {
         ArrayList<Epic> epicList = new ArrayList<>(epicStorage.values());
         return epicList;
     }
 
+    @Override
     public ArrayList<SubTask> getSubTaskStorage() {
         ArrayList<SubTask> subtaskList = new ArrayList<>(subtaskStorage.values());
         return subtaskList;
     }
 
+    @Override
     public ArrayList<Task> getTaskStorage() {
         ArrayList<Task> taskList = new ArrayList<>(taskStorage.values());
         return taskList;
     }
 
-    public SubTask getSubtaskById(int id) {
-        return subtaskStorage.get(id);
-    }
-
+    @Override
     public Task getTaskById(int id) {
-        return taskStorage.get(id);
+        Task task = taskStorage.get(id);
+        if (task != null) {
+            addTaskToHistory(task, historyManager);
+        }
+        return task;
     }
 
+    @Override
+    public SubTask getSubtaskById(int id) {
+        SubTask subTask = subtaskStorage.get(id);
+        if (subTask != null) {
+            addTaskToHistory(subTask, historyManager);
+        }
+        return subTask;
+    }
+
+    @Override
     public Epic getEpicById(int id) {
-        return epicStorage.get(id);
+        Epic epic = epicStorage.get(id);
+        if (epic != null) {
+            addTaskToHistory(epic, historyManager);
+        }
+        return epic;
     }
 
+    private void addTaskToHistory(Task task, HistoryManager historyManager) {
+        historyManager.add(task);
+    }
+
+    @Override
     public void removeTaskById(int id) {
         taskStorage.remove(id);
     }
 
+    @Override
     public void removeEpicById(int id) {
         Epic currentEpic = epicStorage.get(id);
         ArrayList<SubTask> subTasks = currentEpic.getSubTasks();
@@ -92,6 +122,7 @@ public class TaskManager {
         }
     }
 
+    @Override
     public void removeSubtaskById(int id) {
         SubTask currentSubtask = subtaskStorage.get(id);
         Integer updatedEpicId = currentSubtask.getEpicId();
@@ -100,9 +131,8 @@ public class TaskManager {
         subtaskStorage.remove(id);
     }
 
-    /*похоже придется отрефакторить способ хранения сабтаск в рамках следующих ТЗ, ибо это доставляет слишком много лишних хлопот, оставлю пока в таком виде,
-    на данный момент цель допердеть до ТЗ-5 учитывая минимальные временные ресурсы)
-    * */
+
+    @Override
     public void clearSubtasks() {
 
         ArrayList<SubTask> allSubTasks = new ArrayList<>(subtaskStorage.values());
@@ -117,18 +147,22 @@ public class TaskManager {
         subtaskStorage.clear();
     }
 
+    @Override
     public void clearTasks() {
         taskStorage.clear();
     }
 
+    @Override
     public void clearEpics() {
         epicStorage.clear();
     }
 
+    @Override
     public void updateTask(Task task) {
         taskStorage.put(task.getId(), task);
     }
 
+    @Override
     public void updateSubTask(SubTask subTask) {
         Integer updatedEpicId = subTask.getEpicId();
         Epic updatedEpic = epicStorage.get(updatedEpicId);
@@ -141,12 +175,14 @@ public class TaskManager {
 
     }
 
+    @Override
     public void updateEpic(Epic epic) {
         updateEpicStatus(epic);
         epicStorage.put(epic.getId(), epic);
     }
 
-    private void updateEpicStatus(Epic epic) {
+    @Override
+    public void updateEpicStatus(Epic epic) {
         ArrayList<SubTask> currentSubs = epic.getSubTasks();
         boolean allTasksDone = true;
         boolean allTasksNew = true;
@@ -173,6 +209,7 @@ public class TaskManager {
         }
     }
 
+    @Override
     public ArrayList<SubTask> getEpicsSubtasks(int epicId) {
         if (epicStorage.containsKey(epicId)) {
             return new ArrayList<>(epicStorage.get(epicId).getSubTasks());
