@@ -12,7 +12,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     HashMap<Integer,Node> historyTask;
     private Node head;
     private Node tail;
-    int size = 0;
+
 
     public InMemoryHistoryManager() {
         historyTask = new HashMap<>();
@@ -20,7 +20,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public ArrayList<Task> getHistory() {
-        return (ArrayList<Task>) getTasks();
+        return getTasks();
     }
 
     @Override
@@ -28,17 +28,14 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (historyTask.containsKey(task.getId())) {
             remove(task.getId());
         } else {
-            Task taskForHistory = new Task(task.getName(), task.getDiscr(), task.getStatus());
-            linkLast(taskForHistory);
-            historyTask.put(taskForHistory.getId(), tail);
+            linkLast(task);
+            historyTask.put(task.getId(), tail);
         }
     }
 
     @Override
    public void remove(int id) {
-        Node task = historyTask.get(id);
-    removeNode(task);
-    historyTask.remove(id);
+        removeNode(historyTask.remove(id));
     }
 
     public class Node {
@@ -61,15 +58,19 @@ public class InMemoryHistoryManager implements HistoryManager {
             head = newNode;
         } else {
             oldTail.prev = newNode;
-            size++;
+
         }
     }
 
     public ArrayList<Task> getTasks() {
      ArrayList<Task> taskList = new ArrayList<>();
-        for (Map.Entry<Integer, Node> entry : historyTask.entrySet()) {
-            Node value = entry.getValue();
-            taskList.add(value.data);
+
+     Node currentNode = tail;
+        while (currentNode != null) {
+            taskList.add(currentNode.data);
+            if (currentNode == head) {
+                break;
+            }
         }
      return taskList;
     }
@@ -94,8 +95,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
         node.prev = null;
         node.next = null;
-
-        size--;
     }
 
 }
