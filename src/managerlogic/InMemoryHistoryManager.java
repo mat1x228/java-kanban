@@ -99,9 +99,4 @@ public class InMemoryHistoryManager implements HistoryManager {
         node.next = null;
     }
 
-    public void clearHistory() {
-        historyTask.clear();
-        head = null;
-        tail = null;
-    }
 }

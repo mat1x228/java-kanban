@@ -10,6 +10,7 @@ import tasks.Task;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
     private int counterId;
@@ -143,18 +144,28 @@ public class InMemoryTaskManager implements TaskManager {
                 epic.getSubTasks().clear();
                 epic.setStatus(Progress.NEW);
             }
+            historyManager.remove(subTask.getId());
         }
+
         subtaskStorage.clear();
-        historyManager.clearHistory();
+
     }
 
     @Override
     public void clearTasks() {
         taskStorage.clear();
+        for (Map.Entry<Integer, Task> entry : taskStorage.entrySet()) {
+            int taskId = entry.getKey();
+            historyManager.remove(taskId);
+        }
     }
 
     @Override
     public void clearEpics() {
+        for (Map.Entry<Integer, Epic> entry : epicStorage.entrySet()) {
+            int epicId = entry.getKey();
+            historyManager.remove(epicId);
+        }
         epicStorage.clear();
     }
 
