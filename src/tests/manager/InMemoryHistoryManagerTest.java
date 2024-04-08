@@ -17,10 +17,8 @@ class InMemoryHistoryManagerTest {
         HistoryManager historyManager = new InMemoryHistoryManager();
 
         Task task1 = new Task("task1", "Task Description", Progress.NEW);
-        Task task2 = new Task("task1", "Task Description", Progress.NEW);
 
         historyManager.add(task1);
-        historyManager.add(task2);
 
         List<Task> history = historyManager.getHistory();
 

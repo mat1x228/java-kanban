@@ -16,7 +16,10 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     public InMemoryHistoryManager() {
         historyTask = new HashMap<>();
+        head = null;
+        tail = null;
     }
+
 
     @Override
     public ArrayList<Task> getHistory() {
