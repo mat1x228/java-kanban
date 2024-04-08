@@ -1,4 +1,4 @@
-package managerLogic;
+package managerlogic;
 
 import interfaces.HistoryManager;
 import tasks.Task;

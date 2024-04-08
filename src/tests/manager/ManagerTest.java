@@ -2,7 +2,7 @@ package tests.manager;
 
 import interfaces.HistoryManager;
 import interfaces.TaskManager;
-import managerLogic.Managers;
+import managerlogic.Managers;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;

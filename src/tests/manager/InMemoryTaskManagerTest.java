@@ -2,8 +2,8 @@ package tests.manager;
 
 import interfaces.HistoryManager;
 import interfaces.TaskManager;
-import managerLogic.InMemoryTaskManager;
-import managerLogic.Managers;
+import managerlogic.InMemoryTaskManager;
+import managerlogic.Managers;
 import org.junit.Test;
 import tasks.Epic;
 import tasks.Progress;

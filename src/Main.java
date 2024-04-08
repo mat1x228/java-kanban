@@ -1,7 +1,6 @@
-import interfaces.HistoryManager;
-import managerLogic.InMemoryHistoryManager;
+import managerlogic.InMemoryHistoryManager;
 import tasks.*;
-import managerLogic.InMemoryTaskManager;
+import managerlogic.InMemoryTaskManager;
 
 import java.util.ArrayList;
 

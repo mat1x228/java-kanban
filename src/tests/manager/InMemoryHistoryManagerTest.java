@@ -1,12 +1,11 @@
 package tests.manager;
 
-import managerLogic.InMemoryHistoryManager;
+import managerlogic.InMemoryHistoryManager;
 import interfaces.HistoryManager;
 import org.junit.jupiter.api.Test;
 import tasks.Progress;
 import tasks.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

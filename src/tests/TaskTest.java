@@ -2,7 +2,7 @@ package tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import interfaces.TaskManager;
-import managerLogic.Managers;
+import managerlogic.Managers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import tasks.*;
