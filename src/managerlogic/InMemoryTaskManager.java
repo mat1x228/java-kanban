@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
-
 public class InMemoryTaskManager implements TaskManager {
     private int counterId;
     private HashMap<Integer, Task> taskStorage;
@@ -103,7 +102,6 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager.add(task);
     }
 
-
     @Override
     public void removeTaskById(int id) {
         taskStorage.remove(id);
@@ -133,7 +131,6 @@ public class InMemoryTaskManager implements TaskManager {
         subtaskStorage.remove(id);
         historyManager.remove(id);
     }
-
 
     @Override
     public void clearSubtasks() {
@@ -185,7 +182,6 @@ public class InMemoryTaskManager implements TaskManager {
         epicStorage.put(epic.getId(), epic);
     }
 
-
     public void updateEpicStatus(Epic epic) {
         List<SubTask> currentSubs = epic.getSubTasks();
         boolean allTasksDone = true;
@@ -226,6 +222,4 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> getHistory() {
         return historyManager.getHistory();
     }
-
-
 }
