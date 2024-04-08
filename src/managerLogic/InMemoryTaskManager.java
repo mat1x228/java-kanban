@@ -103,8 +103,6 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager.add(task);
     }
 
-    // Остальные методы оставляем без изменений
-
 
     @Override
     public void removeTaskById(int id) {
@@ -225,7 +223,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Task> getHistory(){
+    public List<Task> getHistory() {
         return historyManager.getHistory();
     }
 
