@@ -10,7 +10,6 @@ import tasks.Progress;
 import tasks.SubTask;
 import tasks.Task;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InMemoryTaskManagerTest {
@@ -40,6 +39,7 @@ public class InMemoryTaskManagerTest {
         assertEquals(epic.getDiscr(), foundEpic.getDiscr());
         assertEquals(subTask.getDiscr(), foundSubTask.getDiscr());
     }
+
     @Test
     public void testNoIdConflictBetweenGivenAndGeneratedIds() {
         HistoryManager historyManager = Managers.getDefaultHistory();
@@ -56,6 +56,7 @@ public class InMemoryTaskManagerTest {
 
         assertNotEquals(epic.getId(), generatedTask.getId());
     }
+
     @Test
     public void testTaskUnchangedAfterAddingToManager() {
         HistoryManager historyManager = Managers.getDefaultHistory();
