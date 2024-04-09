@@ -1,12 +1,11 @@
-package tests.manager;
+package service.manager;
 
-import managerLogic.InMemoryHistoryManager;
+import managerlogic.InMemoryHistoryManager;
 import interfaces.HistoryManager;
 import org.junit.jupiter.api.Test;
 import tasks.Progress;
 import tasks.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,10 +17,8 @@ class InMemoryHistoryManagerTest {
         HistoryManager historyManager = new InMemoryHistoryManager();
 
         Task task1 = new Task("task1", "Task Description", Progress.NEW);
-        Task task2 = new Task("task1", "Task Description", Progress.NEW);
 
         historyManager.add(task1);
-        historyManager.add(task2);
 
         List<Task> history = historyManager.getHistory();
 

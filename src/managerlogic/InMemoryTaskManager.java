@@ -1,4 +1,4 @@
-package managerLogic;
+package managerlogic;
 
 import interfaces.HistoryManager;
 import interfaces.TaskManager;
@@ -10,7 +10,7 @@ import tasks.Task;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
-
+import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
     private int counterId;
@@ -103,9 +103,6 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager.add(task);
     }
 
-    // Остальные методы оставляем без изменений
-
-
     @Override
     public void removeTaskById(int id) {
         taskStorage.remove(id);
@@ -136,7 +133,6 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager.remove(id);
     }
 
-
     @Override
     public void clearSubtasks() {
 
@@ -148,18 +144,28 @@ public class InMemoryTaskManager implements TaskManager {
                 epic.getSubTasks().clear();
                 epic.setStatus(Progress.NEW);
             }
+            historyManager.remove(subTask.getId());
         }
+
         subtaskStorage.clear();
-        historyManager.clearHistory();
+
     }
 
     @Override
     public void clearTasks() {
         taskStorage.clear();
+        for (Map.Entry<Integer, Task> entry : taskStorage.entrySet()) {
+            int taskId = entry.getKey();
+            historyManager.remove(taskId);
+        }
     }
 
     @Override
     public void clearEpics() {
+        for (Map.Entry<Integer, Epic> entry : epicStorage.entrySet()) {
+            int epicId = entry.getKey();
+            historyManager.remove(epicId);
+        }
         epicStorage.clear();
     }
 
@@ -186,7 +192,6 @@ public class InMemoryTaskManager implements TaskManager {
         updateEpicStatus(epic);
         epicStorage.put(epic.getId(), epic);
     }
-
 
     public void updateEpicStatus(Epic epic) {
         List<SubTask> currentSubs = epic.getSubTasks();
@@ -225,9 +230,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Task> getHistory(){
+    public List<Task> getHistory() {
         return historyManager.getHistory();
     }
-
 
 }
