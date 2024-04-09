@@ -1,4 +1,4 @@
-package tests.manager;
+package tests.service.manager;
 
 import interfaces.HistoryManager;
 import interfaces.TaskManager;
