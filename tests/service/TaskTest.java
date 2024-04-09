@@ -1,4 +1,4 @@
-package tests.service;
+package service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import interfaces.TaskManager;

@@ -1,4 +1,4 @@
-package tests.service.manager;
+package service.manager;
 
 import managerlogic.InMemoryHistoryManager;
 import interfaces.HistoryManager;
