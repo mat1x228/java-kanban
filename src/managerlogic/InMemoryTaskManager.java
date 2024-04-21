@@ -15,7 +15,7 @@ import java.util.Map;
 import static managerlogic.Managers.getDefaultHistory;
 
 public class InMemoryTaskManager implements TaskManager {
-    private int counterId;
+    protected int counterId;
     protected HashMap<Integer, Task> taskStorage;
     protected HashMap<Integer, Epic> epicStorage;
     protected HashMap<Integer, SubTask> subtaskStorage;
