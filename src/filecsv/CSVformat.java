@@ -1,4 +1,4 @@
-package fileCSV;
+package filecsv;
 
 import enumTaskManager.Progress;
 import tasks.SubTask;
@@ -7,10 +7,10 @@ import tasks.Epic;
 
 public class CSVformat {
 
-   static String head = "id,type,name,status,description,epic";
+    static String head = "id,type,name,status,description,epic";
 
     public static String toString(Task task) {
-        if(task.getClass().equals(SubTask.class)) {
+        if (task.getClass().equals(SubTask.class)) {
 
             return task.getId() + "," + task.getType(task) + "," + task.getName() + "," + task.getStatus() + "," + task.getDiscr() + "," + ((SubTask) task).getEpicId();
         }
