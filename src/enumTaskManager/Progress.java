@@ -1,4 +1,4 @@
-package tasks;
+package enumTaskManager;
 
 public enum Progress {
     NEW,

@@ -1,6 +1,8 @@
+import enumTaskManager.Progress;
 import managerlogic.InMemoryHistoryManager;
 import tasks.*;
 import managerlogic.InMemoryTaskManager;
+
 
 import java.util.ArrayList;
 

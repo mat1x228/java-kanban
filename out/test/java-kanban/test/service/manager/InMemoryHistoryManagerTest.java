@@ -3,7 +3,7 @@ package service.manager;
 import managerlogic.InMemoryHistoryManager;
 import interfaces.HistoryManager;
 import org.junit.jupiter.api.Test;
-import tasks.Progress;
+import enumTaskManager.Progress;
 import tasks.Task;
 
 import java.util.List;

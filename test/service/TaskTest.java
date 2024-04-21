@@ -7,7 +7,7 @@ import managerlogic.Managers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import tasks.Epic;
-import tasks.Progress;
+import enumTaskManager.Progress;
 import tasks.SubTask;
 import tasks.Task;
 

@@ -1,5 +1,7 @@
 package tasks;
 
+import enumTaskManager.Progress;
+
 import java.util.ArrayList;
 
 public class Epic extends Task {

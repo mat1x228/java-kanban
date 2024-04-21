@@ -1,5 +1,7 @@
 package tasks;
 
+import enumTaskManager.Progress;
+
 public class Task {
     private int id;
     private String name;

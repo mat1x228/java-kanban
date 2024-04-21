@@ -6,7 +6,7 @@ import managerlogic.InMemoryTaskManager;
 import managerlogic.Managers;
 import org.junit.Test;
 import tasks.Epic;
-import tasks.Progress;
+import enumTaskManager.Progress;
 import tasks.SubTask;
 import tasks.Task;
 
@@ -17,7 +17,7 @@ public class InMemoryTaskManagerTest {
     @Test
     public void testAddDifferentTasksAndFindById() {
         HistoryManager historyManager = Managers.getDefaultHistory();
-        TaskManager taskManager = new InMemoryTaskManager(historyManager);
+        TaskManager taskManager = new InMemoryTaskManager();
 
         Task task = new Task("task1", "Task Description", Progress.NEW);
         taskManager.addTask(task);
@@ -44,7 +44,7 @@ public class InMemoryTaskManagerTest {
     @Test
     public void testNoIdConflictBetweenGivenAndGeneratedIds() {
         HistoryManager historyManager = Managers.getDefaultHistory();
-        TaskManager taskManager = new InMemoryTaskManager(historyManager);
+        TaskManager taskManager = new InMemoryTaskManager();
 
         Epic epic = new Epic("epic1", "Epic Description");
         epic.setId(5);  // Manually setting an id
@@ -61,7 +61,7 @@ public class InMemoryTaskManagerTest {
     @Test
     public void testTaskUnchangedAfterAddingToManager() {
         HistoryManager historyManager = Managers.getDefaultHistory();
-        TaskManager taskManager = new InMemoryTaskManager(historyManager);
+        TaskManager taskManager = new InMemoryTaskManager();
 
         Task originalTask = new Task("task1", "Task Description", Progress.IN_PROGRESS);
         Task clonedTask = new Task(originalTask.getName(), originalTask.getDiscr(), originalTask.getStatus());

@@ -1,10 +1,18 @@
 package tasks;
 
+import enumTaskManager.Progress;
+
 public class SubTask extends Task {
     private int epicId;
 
     public SubTask(String name, String discr, Progress progress, int epicId) {
         super(name, discr, progress);
+        this.epicId = epicId;
+
+    }
+
+    public SubTask(int id, String name, String discr, Progress progress, int epicId) {
+        super(id, name, discr, progress);
         this.epicId = epicId;
 
     }
