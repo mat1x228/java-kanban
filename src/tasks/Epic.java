@@ -1,6 +1,6 @@
 package tasks;
 
-import enumTaskManager.Progress;
+import enumtaskmanager.Progress;
 
 import java.util.ArrayList;
 

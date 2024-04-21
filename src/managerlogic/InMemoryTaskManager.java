@@ -3,7 +3,7 @@ package managerlogic;
 import interfaces.HistoryManager;
 import interfaces.TaskManager;
 import tasks.Epic;
-import enumTaskManager.Progress;
+import enumtaskmanager.Progress;
 import tasks.SubTask;
 import tasks.Task;
 

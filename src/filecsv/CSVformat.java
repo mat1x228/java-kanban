@@ -1,6 +1,6 @@
 package filecsv;
 
-import enumTaskManager.Progress;
+import enumtaskmanager.Progress;
 import tasks.SubTask;
 import tasks.Task;
 import tasks.Epic;

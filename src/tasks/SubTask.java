@@ -1,6 +1,6 @@
 package tasks;
 
-import enumTaskManager.Progress;
+import enumtaskmanager.Progress;
 
 public class SubTask extends Task {
     private int epicId;

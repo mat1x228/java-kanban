@@ -6,7 +6,7 @@ import managerlogic.InMemoryTaskManager;
 import managerlogic.Managers;
 import org.junit.Test;
 import tasks.Epic;
-import enumTaskManager.Progress;
+import enumtaskmanager.Progress;
 import tasks.SubTask;
 import tasks.Task;
 

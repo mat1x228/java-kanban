@@ -1,4 +1,4 @@
-import enumTaskManager.Progress;
+import enumtaskmanager.Progress;
 import filecsv.CSVformat;
 import managerlogic.FileBackedTaskManager;
 import managerlogic.InMemoryHistoryManager;
