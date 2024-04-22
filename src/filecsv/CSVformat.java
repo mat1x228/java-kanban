@@ -29,7 +29,7 @@ public class CSVformat {
         if ("Task".equals(type)) {
             return new Task(Integer.parseInt(id), name, discr, Progress.valueOf(status));
         } else if ("Epic".equals(type)) {
-            return new Epic(name, discr);
+            return new Epic(Integer.parseInt(id),name, discr, Progress.valueOf(status));
         } else if ("SubTask".equals(type)) {
             if (taskAttributes.length > 5) {
                 String epicId = taskAttributes[5];

@@ -1,6 +1,6 @@
 package tasks;
 
-import enumTaskManager.Progress;
+import enumtaskmanager.Progress;
 
 public class Task {
     private int id;
@@ -13,6 +13,15 @@ public class Task {
         this.discr = discr;
         this.status = status;
     }
+
+    public Task(int id, String name, String discr, Progress status) {
+        this.id = id;
+        this.name = name;
+        this.discr = discr;
+        this.status = status;
+    }
+
+
 
     public void setId(int id) {
         this.id = id;
@@ -46,6 +55,13 @@ public class Task {
 
     public String getName() {
         return name;
+    }
+
+    public String getType(Task task) {
+        String taskType = task.getClass().toString();
+        int index = taskType.indexOf(".");
+        taskType = taskType.substring(index + 1);
+        return taskType;
     }
 
 }

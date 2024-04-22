@@ -59,6 +59,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     continue;
                 }
                 Task task = CSVformat.fromString(line);
+                if (task == null) {
+                    throw new ManagerLoadException("Ошибка загрузки задачи из файла: невозможно разобрать строку: " + line);
+                }
+
                 if (task.getId() > maxId) {
                     maxId = task.getId();
                 }
@@ -67,6 +71,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     taskManager.epicStorage.put(task.getId(), (Epic) task);
                 } else if (task instanceof SubTask) {
                     taskManager.subtaskStorage.put(task.getId(), (SubTask) task);
+                    int epicId = ((SubTask) task).getEpicId();
+                    Epic epic = taskManager.epicStorage.get(epicId);
+                    if (epic != null) {
+                        epic.addSubTask((SubTask) task);
+                    } else {
+                        throw new ManagerLoadException("Ошибка загрузки задачи из файла: не найден эпик с ID " + epicId);
+                    }
                 } else {
                     taskManager.taskStorage.put(task.getId(), task);
                 }
@@ -75,7 +86,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             taskManager.counterId = maxId;
 
         } catch (IOException e) {
-            throw new ManagerLoadException("Ошибка загрузки из файла:" + file.getName() + "\n" + e.getMessage());
+            throw new ManagerLoadException("Ошибка загрузки из файла: " + file.getName() + "\n" + e.getMessage());
         }
         return taskManager;
     }

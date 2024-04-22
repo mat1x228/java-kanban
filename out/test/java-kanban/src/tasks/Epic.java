@@ -1,6 +1,6 @@
 package tasks;
 
-import enumTaskManager.Progress;
+import enumtaskmanager.Progress;
 
 import java.util.ArrayList;
 
@@ -9,6 +9,10 @@ public class Epic extends Task {
 
     public Epic(String name, String discription) {
         super(name, discription, Progress.NEW);
+    }
+
+    public Epic(int id,String name, String discription, Progress progress) {
+        super(id,name, discription,progress);
     }
 
     public void addSubTask(SubTask subTask) {

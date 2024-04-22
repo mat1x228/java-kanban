@@ -1,4 +1,4 @@
-package enumTaskManager;
+package enumtaskmanager;
 
 public enum Types {
 }
