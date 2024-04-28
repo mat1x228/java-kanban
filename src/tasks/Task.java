@@ -27,11 +27,13 @@ public class Task {
         this.startTime = startTime;
     }
 
-    public Task(int id, String name, String discr, Progress status) {
+    public Task(int id, String name, String discr, Progress status, long duration, LocalDateTime startTime) {
         this.id = id;
         this.name = name;
         this.discr = discr;
         this.status = status;
+        this.duration = Duration.ofMinutes(duration);
+        this.startTime = startTime;
     }
 
 

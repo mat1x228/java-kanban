@@ -39,10 +39,6 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     public void addEpic(Epic epic) {
-        if (isTimeCrossingWithExistingTasks(epic)) {
-            throw new IllegalArgumentException("Новая эпическая задача пересекается с существующей");
-        }
-
         epic.setId(generateNextId());
         epicStorage.put(epic.getId(), epic);
         addPrioritizedTask(epic);
@@ -187,11 +183,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateTask(Task task) {
+        if (isTimeCrossingWithExistingTasks(task)) {
+            throw new IllegalArgumentException("Обновленная задача пересекается с другой задачей");
+        }
         taskStorage.put(task.getId(), task);
     }
 
     @Override
     public void updateSubTask(SubTask subTask) {
+        if (isTimeCrossingWithExistingTasks(subTask)) {
+            throw new IllegalArgumentException("Обновленная подзадача пересекается с другой подзадачей");
+        }
         Integer updatedEpicId = subTask.getEpicId();
         Epic updatedEpic = epicStorage.get(updatedEpicId);
         Integer oldSubTaskId = subTask.getId();
@@ -205,6 +207,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateEpic(Epic epic) {
+        if (isTimeCrossingWithExistingTasks(epic)) {
+            throw new IllegalArgumentException("Обновленная подзадача пересекается с другой подзадачей");
+        }
         updateEpicStatus(epic);
         epicStorage.put(epic.getId(), epic);
     }
@@ -273,7 +278,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     private boolean isTimeCrossingWithExistingTasks(Task task) {
         for (Task existingTask : prioritizedTasks) {
-            if (validateTimeCrossing(existingTask, task)) {
+            if (!task.equals(existingTask) && validateTimeCrossing(existingTask, task)) {
                 return true;
             }
         }

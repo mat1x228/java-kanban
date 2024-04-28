@@ -7,9 +7,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Epic extends Task {
-
-    private Duration duration;
-    private LocalDateTime startTime;
     private LocalDateTime endTime;
     private ArrayList<SubTask> subTasks = new ArrayList<>();
 
@@ -17,8 +14,8 @@ public class Epic extends Task {
         super(name, discription, Progress.NEW);
     }
 
-    public Epic(int id, String name, String discription, Progress progress) {
-        super(id, name, discription, progress);
+    public Epic(int id, String name, String discription, Progress progress,long duration, LocalDateTime startTime) {
+        super(id, name, discription, progress, duration, startTime);
     }
 
     public void addSubTask(SubTask subTask) {
@@ -51,7 +48,12 @@ public class Epic extends Task {
 
     @Override
     public LocalDateTime getStartTime() {
-        return startTime;
+        LocalDateTime earliestTime = subTasks.stream()
+                .map(SubTask::getStartTime)
+                .min(LocalDateTime::compareTo)
+                .orElse(null);
+
+        return earliestTime;
     }
 
     public SubTask getLastSubTask() {

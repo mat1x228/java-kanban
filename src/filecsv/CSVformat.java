@@ -1,41 +1,47 @@
 package filecsv;
 
 import enumtaskmanager.Progress;
+import tasks.Epic;
 import tasks.SubTask;
 import tasks.Task;
-import tasks.Epic;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class CSVformat {
 
-    static String head = "id,type,name,status,description,epic";
+    static String head = "id,type,name,status,description,epic,duration,startTime";
 
     public static String toString(Task task) {
-        if (task.getClass().equals(SubTask.class)) {
+        String taskString = task.getId() + "," + task.getType(task) + "," + task.getName() + "," + task.getStatus() + "," +
+                task.getDiscr();
 
-            return task.getId() + "," + task.getType(task) + "," + task.getName() + "," + task.getStatus() + "," + task.getDiscr() + "," + ((SubTask) task).getEpicId();
+        if (task instanceof SubTask) {
+            taskString += "," + ((SubTask) task).getEpicId();
         }
-        return task.getId() + "," + task.getType(task) + "," + task.getName() + "," + task.getStatus() + "," + task.getDiscr();
 
+        taskString += "," + task.getDuration().toMinutes() + "," + task.getStartTime().toString();
+        return taskString;
     }
 
     public static Task fromString(String value) {
-        String[] taskAttributes = value.split(",");
-        String id = taskAttributes[0];
-        String type = taskAttributes[1];
-        String name = taskAttributes[2];
-        String status = taskAttributes[3];
-        String discr = taskAttributes[4];
+        String[] attributes = value.split(",");
+        String id = attributes[0];
+        String type = attributes[1];
+        String name = attributes[2];
+        String status = attributes[3];
+        String description = attributes[4];
+        long duration = Long.parseLong(attributes[6]);
+        LocalDateTime startTime = LocalDateTime.parse(attributes[7]);
 
         if ("Task".equals(type)) {
-            return new Task(Integer.parseInt(id), name, discr, Progress.valueOf(status));
+            return new Task(name, description, Progress.valueOf(status), duration, startTime);
         } else if ("Epic".equals(type)) {
-            return new Epic(Integer.parseInt(id),name, discr, Progress.valueOf(status));
+            return new Epic(Integer.parseInt(id), name, description, Progress.valueOf(status), duration, startTime);
         } else if ("SubTask".equals(type)) {
-            if (taskAttributes.length > 5) {
-                String epicId = taskAttributes[5];
-                return new SubTask(Integer.parseInt(id), name, discr, Progress.valueOf(status), Integer.parseInt(epicId));
-            }
+            String epicId = attributes[5];
+            return new SubTask(Integer.parseInt(id), name, description, Progress.valueOf(status), Integer.parseInt(epicId), duration, startTime);
         }
+
         return null;
     }
 

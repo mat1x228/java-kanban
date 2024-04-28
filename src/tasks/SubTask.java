@@ -13,14 +13,8 @@ public class SubTask extends Task {
 
     }
 
-    public SubTask(String name, String discr, Progress progress, int epicId, long duration, LocalDateTime startTime) {
-        super(name, discr, progress, duration, startTime);
-        this.epicId = epicId;
-
-    }
-
-    public SubTask(int id, String name, String discr, Progress progress, int epicId) {
-        super(id, name, discr, progress);
+    public SubTask(int id, String name, String discr, Progress progress, int epicId, long duration, LocalDateTime startTime) {
+        super(id, name, discr, progress, duration, startTime);
         this.epicId = epicId;
 
     }
