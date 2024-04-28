@@ -19,8 +19,8 @@ public class Epic extends Task {
         super(name, discription, Progress.NEW);
     }
 
-    public Epic(int id,String name, String discription, Progress progress) {
-        super(id,name, discription,progress);
+    public Epic(int id, String name, String discription, Progress progress) {
+        super(id, name, discription, progress);
     }
 
     public void addSubTask(SubTask subTask) {
@@ -45,7 +45,7 @@ public class Epic extends Task {
 
     public Duration getDuration() {
         Duration epicDuration = null;
-        for(SubTask subTask : subTasks) {
+        for (SubTask subTask : subTasks) {
             epicDuration = epicDuration.plus(subTask.getDuration());
         }
         return epicDuration;
@@ -57,7 +57,7 @@ public class Epic extends Task {
     }
 
     public SubTask getLastSubTask() {
-        if(subTasks.isEmpty()) {
+        if (subTasks.isEmpty()) {
             return null;
         } else {
             return subTasks.get(subTasks.size() - 1);
@@ -70,8 +70,6 @@ public class Epic extends Task {
                 .map(Task::getStartTime)
                 .max(LocalDateTime::compareTo)
                 .orElse(null);
-      return  latestTime.plus(getLastSubTask().getDuration());
+        return latestTime.plus(getLastSubTask().getDuration());
     }
-
-
 }
