@@ -6,8 +6,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static java.util.Collections.max;
-
 public class Epic extends Task {
 
     private Duration duration;
