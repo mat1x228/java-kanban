@@ -19,7 +19,7 @@ public class Task {
         this.status = status;
     }
 
-    public Task (String name, String discr, Progress status, long duration, LocalDateTime startTime) {
+    public Task(String name, String discr, Progress status, long duration, LocalDateTime startTime) {
         this.name = name;
         this.discr = discr;
         this.status = status;
