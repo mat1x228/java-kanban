@@ -7,10 +7,7 @@ import enumtaskmanager.Progress;
 import tasks.SubTask;
 import tasks.Task;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 
 import static managerlogic.Managers.getDefaultHistory;
 
@@ -20,6 +17,8 @@ public class InMemoryTaskManager implements TaskManager {
     protected HashMap<Integer, Epic> epicStorage;
     protected HashMap<Integer, SubTask> subtaskStorage;
     private HistoryManager historyManager = null;
+    private Set<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime)
+            .thenComparing(Task::getId));
 
     public InMemoryTaskManager() {
         this.taskStorage = new HashMap<>();
@@ -29,31 +28,45 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager = getDefaultHistory();
     }
 
-    @Override
     public void addTask(Task task) {
+        if (isTimeCrossingWithExistingTasks(task)) {
+            throw new IllegalArgumentException("Новая задача пересекается с существующей");
+        }
+
         task.setId(generateNextId());
         taskStorage.put(task.getId(), task);
+        addPrioritizedTask(task);
     }
 
-    @Override
     public void addEpic(Epic epic) {
+        if (isTimeCrossingWithExistingTasks(epic)) {
+            throw new IllegalArgumentException("Новая эпическая задача пересекается с существующей");
+        }
+
         epic.setId(generateNextId());
         epicStorage.put(epic.getId(), epic);
+        addPrioritizedTask(epic);
     }
 
-    @Override
     public void addSubtask(SubTask subtask) {
+        if (isTimeCrossingWithExistingTasks(subtask)) {
+            throw new IllegalArgumentException("Новая подзадача пересекается с существующей");
+        }
+
         int epicId = subtask.getEpicId();
         Epic epic = epicStorage.get(epicId);
         if (epic == null) {
             return;
         }
+
         int subTaskId = generateNextId();
         subtask.setId(subTaskId);
         subtaskStorage.put(subTaskId, subtask);
         epic.addSubTask(subtask);
         updateEpicStatus(epic);
+        addPrioritizedTask(subtask);
     }
+
 
     public int generateNextId() {
         return counterId++;
@@ -237,4 +250,33 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
+    @Override
+    public List<Task> getPrioritizedTasks() {
+        ArrayList<Task> list = new ArrayList<>();
+        list.addAll(prioritizedTasks);
+        return list;
+    }
+
+    public void addPrioritizedTask(Task task) {
+        if (task.getStartTime() != null) {
+            prioritizedTasks.add(task);
+        }
+    }
+
+    public boolean validateTimeCrossing(Task currentTask, Task futureTask) {
+        if (futureTask.getStartTime().isBefore(currentTask.getEndTime()) &&
+                futureTask.getEndTime().isAfter(currentTask.getStartTime())) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isTimeCrossingWithExistingTasks(Task task) {
+        for (Task existingTask : prioritizedTasks) {
+            if (validateTimeCrossing(existingTask, task)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
