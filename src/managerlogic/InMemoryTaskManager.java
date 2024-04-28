@@ -3,7 +3,7 @@ package managerlogic;
 import interfaces.HistoryManager;
 import interfaces.TaskManager;
 import tasks.Epic;
-import tasks.Progress;
+import enumtaskmanager.Progress;
 import tasks.SubTask;
 import tasks.Task;
 
@@ -12,19 +12,21 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class InMemoryTaskManager implements TaskManager {
-    private int counterId;
-    private HashMap<Integer, Task> taskStorage;
-    private HashMap<Integer, Epic> epicStorage;
-    private HashMap<Integer, SubTask> subtaskStorage;
-    private HistoryManager historyManager;
+import static managerlogic.Managers.getDefaultHistory;
 
-    public InMemoryTaskManager(HistoryManager historyManager) {
+public class InMemoryTaskManager implements TaskManager {
+    protected int counterId;
+    protected HashMap<Integer, Task> taskStorage;
+    protected HashMap<Integer, Epic> epicStorage;
+    protected HashMap<Integer, SubTask> subtaskStorage;
+    private HistoryManager historyManager = null;
+
+    public InMemoryTaskManager() {
         this.taskStorage = new HashMap<>();
         this.epicStorage = new HashMap<>();
         this.subtaskStorage = new HashMap<>();
         this.counterId = 1;
-        this.historyManager = historyManager;
+        historyManager = getDefaultHistory();
     }
 
     @Override
@@ -110,7 +112,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void removeEpicById(int id) {
+    public void
+    removeEpicById(int id) {
         Epic currentEpic = epicStorage.get(id);
         ArrayList<SubTask> subTasks = currentEpic.getSubTasks();
         if (!subTasks.isEmpty()) {
