@@ -9,14 +9,13 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import static statuscode.HttpStatusCode.OK;
 
 public class BaseHttpHandler implements HttpHandler {
 
     protected TaskManager manager;
     protected Gson gson;
 
-    BaseHttpHandler(Gson gson, TaskManager manager){
+    BaseHttpHandler(Gson gson, TaskManager manager) {
         this.gson = gson;
         this.manager = manager;
     }
