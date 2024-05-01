@@ -12,7 +12,7 @@ import static statuscode.HttpStatusCode.*;
 
 public class HandlerSubTask extends BaseHttpHandler implements HttpHandler {
 
-    public HandlerSubTask(Gson gson, TaskManager manager){
+    public HandlerSubTask(Gson gson, TaskManager manager) {
         super(gson, manager);
     }
 
