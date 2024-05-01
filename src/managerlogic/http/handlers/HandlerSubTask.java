@@ -25,11 +25,11 @@ public class HandlerSubTask extends BaseHttpHandler implements HttpHandler {
         try {
             switch (method) {
                 case "GET":
-                    if (splitPath[1].equals("subtasks") && exchange.getRequestURI().getQuery() == null) {
+                    if ("subtasks".equals(splitPath[1]) && exchange.getRequestURI().getQuery() == null) {
                         String response = gson.toJson(manager.getSubTaskStorage());
                         sendText(exchange, response, OK.getCode());
                         break;
-                    } else if (splitPath[1].equals("subtasks") && exchange.getRequestURI().getQuery() != null) {
+                    } else if ("subtasks".equals(splitPath[1]) && exchange.getRequestURI().getQuery() != null) {
                         int id = Integer.parseInt(exchange.getRequestURI().getQuery().replaceFirst("id=", ""));
                         String response = gson.toJson(manager.getSubtaskById(id));
                         sendText(exchange, response, OK.getCode());
@@ -37,7 +37,7 @@ public class HandlerSubTask extends BaseHttpHandler implements HttpHandler {
                     }
 
                 case "POST":
-                    if (splitPath[1].equals("subtasks")) {
+                    if ("subtasks".equals(splitPath[1])) {
                         String requestBody = readText(exchange);
                         if (requestBody != null) {
                             SubTask subtask = gson.fromJson(requestBody, SubTask.class);
@@ -53,7 +53,7 @@ public class HandlerSubTask extends BaseHttpHandler implements HttpHandler {
                     }
 
                 case "DELETE":
-                    if (splitPath[1].equals("subtasks") && exchange.getRequestURI().getQuery() != null) {
+                    if ("subtasks".equals(splitPath[1]) && exchange.getRequestURI().getQuery() != null) {
                         int id = Integer.parseInt(exchange.getRequestURI().getQuery().replaceFirst("id=", ""));
                         manager.removeSubtaskById(id);
                         sendText(exchange, "", OK.getCode());

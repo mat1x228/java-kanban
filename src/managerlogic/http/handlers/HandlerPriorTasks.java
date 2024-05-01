@@ -22,7 +22,7 @@ public class HandlerPriorTasks extends BaseHttpHandler implements HttpHandler {
         String method = exchange.getRequestMethod();
         try {
             if (method.equals("GET")) {
-                if (splitPath[1].equals("prioritized") && exchange.getRequestURI().getQuery() == null) {
+                if ("prioritized".equals(splitPath[1]) && exchange.getRequestURI().getQuery() == null) {
                     String response = gson.toJson(manager.getPrioritizedTasks());
                     sendText(exchange, OK.getDescription(), OK.getCode());
                     return;

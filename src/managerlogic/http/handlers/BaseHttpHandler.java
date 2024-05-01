@@ -47,7 +47,8 @@ public class BaseHttpHandler implements HttpHandler {
     public void sendHasInteractions(HttpExchange exchange, String response, int code) throws IOException {
         if (exchange != null) {
             exchange.getResponseHeaders().add("Content-Type", "text/plain");
-            exchange.sendResponseHeaders(code, response.length());
+            byte[] responseBytes = response.getBytes(StandardCharsets.UTF_8);
+            exchange.sendResponseHeaders(code, responseBytes.length);
             try (OutputStream os = exchange.getResponseBody()) {
                 os.write(response.getBytes(StandardCharsets.UTF_8));
             }

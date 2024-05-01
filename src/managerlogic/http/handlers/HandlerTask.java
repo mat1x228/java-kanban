@@ -25,11 +25,11 @@ public class HandlerTask extends BaseHttpHandler implements HttpHandler {
         try {
             switch (method) {
                 case "GET":
-                    if (splitPath[1].equals("tasks") && exchange.getRequestURI().getQuery() == null) {
+                    if ("tasks".equals(splitPath[1]) && exchange.getRequestURI().getQuery() == null) {
                         String response = gson.toJson(manager.getTaskStorage());
                         sendText(exchange, response, OK.getCode());
                         break;
-                    } else if (splitPath[1].equals("tasks") && exchange.getRequestURI().getQuery() != null) {
+                    } else if ("tasks".equals(splitPath[1])  && exchange.getRequestURI().getQuery() != null) {
                         int id = Integer.parseInt(exchange.getRequestURI().getQuery().replaceFirst("id=", ""));
                         String response = gson.toJson(manager.getTaskById(id));
                         sendText(exchange, response, OK.getCode());
@@ -37,7 +37,7 @@ public class HandlerTask extends BaseHttpHandler implements HttpHandler {
                     }
 
                 case "POST":
-                    if (splitPath[1].equals("tasks")) {
+                    if ("tasks".equals(splitPath[1])) {
                         String requestBody = readText(exchange);
                         if (requestBody != null) {
                             Task task = gson.fromJson(requestBody, Task.class);
@@ -58,7 +58,7 @@ public class HandlerTask extends BaseHttpHandler implements HttpHandler {
                     }
 
                 case "DELETE":
-                    if (splitPath[1].equals("tasks") && exchange.getRequestURI().getQuery() != null) {
+                    if ("tasks".equals(splitPath[1])  && exchange.getRequestURI().getQuery() != null) {
                         int id = Integer.parseInt(exchange.getRequestURI().getQuery().replaceFirst("id=", ""));
                         manager.removeTaskById(id);
                         sendText(exchange, "", OK.getCode());

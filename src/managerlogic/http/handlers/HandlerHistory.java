@@ -23,7 +23,7 @@ public class HandlerHistory extends BaseHttpHandler implements HttpHandler {
         String method = exchange.getRequestMethod();
         try {
             if (method.equals("GET")) {
-                if (splitPath.length > 1 && splitPath[1].equals("history")) {
+                if (splitPath.length > 1 && "history".equals(splitPath[1])) {
                     if (exchange.getRequestURI().getQuery() == null) {
                         String response = gson.toJson(manager.getHistory());
                         sendText(exchange, response, OK.getCode());

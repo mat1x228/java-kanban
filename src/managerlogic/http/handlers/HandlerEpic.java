@@ -24,7 +24,7 @@ public class HandlerEpic extends BaseHttpHandler implements HttpHandler {
         try {
             switch (method) {
                 case "GET":
-                    if (splitPath.length >= 2 && splitPath[1].equals("epics")) {
+                    if (splitPath.length >= 2 && "epics".equals(splitPath[1])) {
                         if (splitPath.length == 2 && httpExchange.getRequestURI().getQuery() == null) {
                             String response = gson.toJson(manager.getEpicStorage());
                             sendText(httpExchange, response, OK.getCode());
@@ -44,7 +44,7 @@ public class HandlerEpic extends BaseHttpHandler implements HttpHandler {
                     break;
 
                 case "POST":
-                    if (splitPath.length >= 2 && splitPath[1].equals("epics")) {
+                    if (splitPath.length >= 2 && "epics".equals(splitPath[1])) {
                         String requestBody = readText(httpExchange);
                         if (requestBody != null) {
                             Epic epic = gson.fromJson(requestBody, Epic.class);
@@ -57,7 +57,7 @@ public class HandlerEpic extends BaseHttpHandler implements HttpHandler {
                     break;
 
                 case "DELETE":
-                    if (splitPath.length >= 2 && splitPath[1].equals("epics") && httpExchange.getRequestURI().getQuery() != null) {
+                    if (splitPath.length >= 2 && "epics".equals(splitPath[1]) && httpExchange.getRequestURI().getQuery() != null) {
                         int id = Integer.parseInt(httpExchange.getRequestURI().getQuery().replaceFirst("id=", ""));
                         manager.removeEpicById(id);
                         sendText(httpExchange, "", OK.getCode());
