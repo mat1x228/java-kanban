@@ -13,7 +13,7 @@ import java.net.InetSocketAddress;
 
 public class HttpTaskServer {
 
-    final private int PORT = 8080;
+    private static final int port = 8080;
     private static HttpServer server;
     private final TaskManager manager;
 
@@ -31,7 +31,7 @@ public class HttpTaskServer {
     }
 
     public void start() throws IOException {
-        server = HttpServer.create(new InetSocketAddress(PORT), 0);
+        server = HttpServer.create(new InetSocketAddress(port), 0);
         Gson gson = new Gson();
 
         server.createContext("/tasks", new HandlerTask(gson, manager));
@@ -41,7 +41,7 @@ public class HttpTaskServer {
         server.createContext("/prioritized", new HandlerPriorTasks(gson, manager));
 
         server.start();
-        System.out.println("HTTP-сервер запущен на " + PORT + " порту!");
+        System.out.println("HTTP-сервер запущен на " + port + " порту!");
     }
 
     public static void stop(int delay) {
