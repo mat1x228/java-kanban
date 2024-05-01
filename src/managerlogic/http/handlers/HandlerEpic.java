@@ -11,9 +11,10 @@ import java.io.IOException;
 import static statuscode.HttpStatusCode.*;
 
 public class HandlerEpic extends BaseHttpHandler implements HttpHandler {
-    public HandlerEpic(Gson gson, TaskManager manager){
+    public HandlerEpic(Gson gson, TaskManager manager) {
         super(gson, manager);
     }
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String path = httpExchange.getRequestURI().getPath();
