@@ -20,22 +20,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     public void save() {
-        try (FileWriter fileWriter = new FileWriter(file)) {
-
+        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(file))) {
             fileWriter.write(CSVformat.getHead() + "\n");
 
             for (Task task : taskStorage.values()) {
                 String strTask = CSVformat.toString(task);
-                fileWriter.write(strTask + "\n");
-            }
-
-            for (Epic epic : epicStorage.values()) {
-                String strTask = CSVformat.toString(epic);
-                fileWriter.write(strTask + "\n");
-            }
-
-            for (SubTask subTask : subtaskStorage.values()) {
-                String strTask = CSVformat.toString(subTask);
                 fileWriter.write(strTask + "\n");
             }
 
@@ -46,7 +35,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     public static FileBackedTaskManager loadFromFile(File file) {
         FileBackedTaskManager taskManager = new FileBackedTaskManager(file);
-
         int maxId = 0;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -58,6 +46,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     headerLineSkipped = true;
                     continue;
                 }
+
                 Task task = CSVformat.fromString(line);
                 if (task == null) {
                     throw new ManagerLoadException("Ошибка загрузки задачи из файла: невозможно разобрать строку: " + line);
